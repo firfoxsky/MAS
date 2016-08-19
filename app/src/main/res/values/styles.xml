@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="actionMenuTextColor">@color/colorWhite</item>
+        <item name="android:textStyle">normal</item>
+        <item name="actionMenuTextAppearance">@style/MenuTextStyle</item>
+        <item name="android:actionBarSize">50dp</item>
+    </style>
+
+    <style name="MenuTextStyle">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>
