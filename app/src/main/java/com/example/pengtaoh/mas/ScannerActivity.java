@@ -3,6 +3,7 @@ package com.example.pengtaoh.mas;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.pengtaoh.mas.uicomp.SmoothProgressBar.SmoothProgressBar;
 
@@ -62,7 +63,11 @@ public class ScannerActivity extends BaseActivity {
     }
 
     public void closeTransfer() {
-        if (mUHF != null)
-            mUHF.transfer_close(mUHF);
+        try {
+            if (mUHF != null)
+                mUHF.transfer_close(mUHF);
+        } catch (Exception e) {
+            Toast.makeText(this, "please choose com_fd with sure !", Toast.LENGTH_SHORT).show();
+        }
     }
 }
