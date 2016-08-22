@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+project(':masdaogenerator') {
+    apply plugin: 'application'
+    apply plugin: 'java'
+    mainClassName = "com.pengtaoh.mas.generator.MasDaoGenerator"
+    dependencies {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+    }
+}
+
+dependencies {
+    compile 'org.greenrobot:greendao-generator:2.2.0'
+}
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
