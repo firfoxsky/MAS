@@ -16,4 +16,8 @@ public class BrandModel extends BaseModel {
     public final static String COLUMN_TYPE = "Type";
 
     public final static String COLUMN_DESC = "Desc";
+
+    public final static String COLUMN_NAME = "name";
+
+
 }

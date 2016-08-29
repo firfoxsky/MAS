@@ -20,6 +20,7 @@ public class DictBrandEntity {
         entity.addStringProperty(BrandModel.COLUMN_ATTR);
         entity.addStringProperty(BrandModel.COLUMN_TYPE);
         entity.addStringProperty(BrandModel.COLUMN_DESC);
+        entity.addStringProperty(BrandModel.COLUMN_NAME);
         entity.addLongProperty(BrandModel.COLUMN_CREATE_TIME);
     }
 }

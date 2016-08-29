@@ -29,7 +29,8 @@ public class DictBrandEntityDao extends AbstractDao<DictBrandEntity, Long> {
         public final static Property Attr = new Property(3, String.class, "Attr", false, "ATTR");
         public final static Property Type = new Property(4, String.class, "Type", false, "TYPE");
         public final static Property Desc = new Property(5, String.class, "Desc", false, "DESC");
-        public final static Property ModelCreateTime = new Property(6, Long.class, "ModelCreateTime", false, "MODEL_CREATE_TIME");
+        public final static Property Name = new Property(6, String.class, "name", false, "NAME");
+        public final static Property ModelCreateTime = new Property(7, Long.class, "ModelCreateTime", false, "MODEL_CREATE_TIME");
     };
 
 
@@ -51,7 +52,8 @@ public class DictBrandEntityDao extends AbstractDao<DictBrandEntity, Long> {
                 "\"ATTR\" TEXT," + // 3: Attr
                 "\"TYPE\" TEXT," + // 4: Type
                 "\"DESC\" TEXT," + // 5: Desc
-                "\"MODEL_CREATE_TIME\" INTEGER);"); // 6: ModelCreateTime
+                "\"NAME\" TEXT," + // 6: name
+                "\"MODEL_CREATE_TIME\" INTEGER);"); // 7: ModelCreateTime
     }
 
     /** Drops the underlying database table. */
@@ -95,9 +97,14 @@ public class DictBrandEntityDao extends AbstractDao<DictBrandEntity, Long> {
             stmt.bindString(6, Desc);
         }
  
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(7, name);
+        }
+ 
         Long ModelCreateTime = entity.getModelCreateTime();
         if (ModelCreateTime != null) {
-            stmt.bindLong(7, ModelCreateTime);
+            stmt.bindLong(8, ModelCreateTime);
         }
     }
 
@@ -117,7 +124,8 @@ public class DictBrandEntityDao extends AbstractDao<DictBrandEntity, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // Attr
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // Type
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // Desc
-            cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6) // ModelCreateTime
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // name
+            cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7) // ModelCreateTime
         );
         return entity;
     }
@@ -131,7 +139,8 @@ public class DictBrandEntityDao extends AbstractDao<DictBrandEntity, Long> {
         entity.setAttr(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setType(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setDesc(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setModelCreateTime(cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6));
+        entity.setName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setModelCreateTime(cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7));
      }
     
     /** @inheritdoc */

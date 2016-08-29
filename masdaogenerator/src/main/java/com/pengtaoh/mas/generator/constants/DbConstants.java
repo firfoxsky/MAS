@@ -8,7 +8,7 @@ public class DbConstants {
     /**
      * Local database version number 1.0
      */
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     /**
      * 本地数据库版本号码

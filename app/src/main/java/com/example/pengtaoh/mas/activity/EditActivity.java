@@ -1,5 +1,6 @@
 package com.example.pengtaoh.mas.activity;
 
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.pengtaoh.mas.dao.DictBrandEntity;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uhf.api.CommandType;
 import uhf.api.Query_epc;
@@ -42,6 +44,8 @@ public class EditActivity extends BaseActivity {
     EditText desc;
     @BindView(R.id.delete)
     Button delete;
+    @BindView(R.id.name)
+    EditText name;
 
     private DictBrandEntity currentEntity;
 
@@ -55,7 +59,6 @@ public class EditActivity extends BaseActivity {
     void initViews() {
         settingToolbar(R.id.toolbar, R.id.toolbar_title, true);
         scannerBtn.setTag(Constants.FLAG_NONE_SCANNER);
-        cardNumber.setText(getString(R.string.serial_number, ""));
     }
 
 
@@ -92,11 +95,16 @@ public class EditActivity extends BaseActivity {
     }
 
     public void insertDB() {
+        if (currentEntity != null) {
+            MasApplication.getDaoSession().getDictBrandEntityDao().delete(currentEntity);
+        }
         DictBrandEntity entity = new DictBrandEntity();
         entity.setModelCreateTime(System.currentTimeMillis());
         entity.setArea(area.getText().toString());
         entity.setAttr(attr.getText().toString());
         entity.setDesc(desc.getText().toString());
+        entity.setType(category.getText().toString());
+        entity.setName(name.getText().toString());
         entity.setSerialNumber(cardNumber.getText().toString());
         MasApplication.getDaoSession().getDictBrandEntityDao().insert(entity);
         finish();
@@ -106,7 +114,7 @@ public class EditActivity extends BaseActivity {
         scannerBtn.setTag(Constants.FLAG_SCANNER);
         scannerBtn.setText(R.string.end_scanner);
         progressWheel.setVisibility(View.VISIBLE);
-
+        clearContent();
 
         Query_epc mQuery_epc = new Query_epc();
         UHFClient info = UHFClient.getInstance();
@@ -117,8 +125,8 @@ public class EditActivity extends BaseActivity {
                 str_tmp = str_tmp.replace(" ", "");
                 String str_rssi = "" +
                         CommandUtil.rssi_calculate((char) mQuery_epc.rssi_msb, (char) mQuery_epc.rssi_lsb);
-                cardNumber.setText(getString(R.string.serial_number, str_tmp));
-//                showMessage(str_tmp, str_rssi);
+                cardNumber.setText(str_tmp);
+                showMessage(str_tmp, str_rssi);
                 closeScanner();
             } else {
             }
@@ -126,19 +134,19 @@ public class EditActivity extends BaseActivity {
     }
 
     public void closeScanner() {
-        scannerBtn.setTag(Constants.FLAG_SCANNER);
+        scannerBtn.setTag(Constants.FLAG_NONE_SCANNER);
         scannerBtn.setText(R.string.start_scanner);
         progressWheel.setVisibility(View.GONE);
 
-        UHFClient info = UHFClient.getInstance();
-        if (info != null)
-            UHFClient.mUHF.command(CommandType.SINGLE_QUERY_TAGS_EPC, null);
+//        UHFClient info = UHFClient.getInstance();
+//        if (info != null)
+//            UHFClient.mUHF.command(CommandType.SINGLE_QUERY_TAGS_EPC, null);
 
     }
 
     public void showMessage(String str_tmp, String str_rssi) {
         List<DictBrandEntity> list = MasApplication.getDaoSession().getDictBrandEntityDao()
-                .queryRaw(" where SerialNumber = ?", new String[]{str_tmp});
+                .queryRaw(" where SERIAL_NUMBER = ?", new String[]{str_tmp});
 
 
         if (list != null && !list.isEmpty()) {
@@ -147,6 +155,7 @@ public class EditActivity extends BaseActivity {
             attr.setText(currentEntity.getAttr());
             category.setText(currentEntity.getType());
             desc.setText(currentEntity.getDesc());
+            name.setText(currentEntity.getName());
 
             delete.setVisibility(View.VISIBLE);
         }
@@ -154,10 +163,13 @@ public class EditActivity extends BaseActivity {
     }
 
     public void clearContent() {
-        cardNumber.setText(getString(R.string.serial_number, ""));
+        currentEntity = null;
+        cardNumber.setText("");
+        name.setText("");
         area.setText("");
         attr.setText("");
         category.setText("");
         desc.setText("");
     }
+
 }

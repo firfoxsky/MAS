@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.example.pengtaoh.mas.R;
 import com.pengtaoh.mas.dao.DictBrandEntity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,20 +54,32 @@ public class ScannerAdapter extends BaseAdapter {
 
         DictBrandEntity entity = getItem(position);
 
-        hold.name.setText(entity.getArea());
+        hold.name.setText(entity.getName());
         hold.number.setText(entity.getSerialNumber());
+        hold.time.setText(longToString(entity.getModelCreateTime()));
 
         return convertView;
+    }
+
+
+    // long类型转换为String类型
+    // currentTime要转换的long类型的时间
+    // formatType要转换的string类型的时间格式
+    public String longToString(long currentTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return sdf.format(new Date(currentTime));
     }
 
     public class BrandHolder {
         private TextView name;
         private TextView number;
+        private TextView time;
 
 
         public BrandHolder(View view) {
             name = (TextView) view.findViewById(R.id.name);
             number = (TextView) view.findViewById(R.id.serial_number);
+            time = (TextView) view.findViewById(R.id.time);
         }
     }
 }

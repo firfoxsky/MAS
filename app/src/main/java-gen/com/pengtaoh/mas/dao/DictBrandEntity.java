@@ -12,6 +12,7 @@ public class DictBrandEntity {
     private String Attr;
     private String Type;
     private String Desc;
+    private String name;
     private Long ModelCreateTime;
 
     public DictBrandEntity() {
@@ -21,13 +22,14 @@ public class DictBrandEntity {
         this.id = id;
     }
 
-    public DictBrandEntity(Long id, String SerialNumber, String Area, String Attr, String Type, String Desc, Long ModelCreateTime) {
+    public DictBrandEntity(Long id, String SerialNumber, String Area, String Attr, String Type, String Desc, String name, Long ModelCreateTime) {
         this.id = id;
         this.SerialNumber = SerialNumber;
         this.Area = Area;
         this.Attr = Attr;
         this.Type = Type;
         this.Desc = Desc;
+        this.name = name;
         this.ModelCreateTime = ModelCreateTime;
     }
 
@@ -77,6 +79,14 @@ public class DictBrandEntity {
 
     public void setDesc(String Desc) {
         this.Desc = Desc;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getModelCreateTime() {

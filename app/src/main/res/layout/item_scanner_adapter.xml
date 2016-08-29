@@ -17,9 +17,12 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minLines="2"
             android:text="苹果" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -37,7 +40,24 @@
             android:id="@+id/serial_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12345678567" />
+            android:text="" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="创建时间：" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
 </LinearLayout>

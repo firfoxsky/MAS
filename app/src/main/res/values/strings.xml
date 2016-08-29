@@ -6,10 +6,13 @@
     <string name="edit_text">编辑</string>
     <string name="scanner_text">扫描</string>
     <string name="save_text">保存</string>
+
+
+    <string name="name_text">名称：</string>
     <string name="area_text">区域：</string>
     <string name="product_attr">商品属性：</string>
     <string name="product_type">商品分类：</string>
     <string name="product_desc">商品详情：</string>
-    <string name="serial_number">序列号：%1$s</string>
+    <string name="serial_number">序列号：</string>
     <string name="delete_text">删除</string>
 </resources>

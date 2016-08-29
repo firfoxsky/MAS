@@ -1,8 +1,10 @@
 package com.example.pengtaoh.mas.activity;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.pengtaoh.mas.Constants;
 import com.example.pengtaoh.mas.MasApplication;
@@ -17,12 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uhf.api.CommandType;
 import uhf.api.MultiLableCallBack;
 import uhf.api.Multi_query_epc;
 import uhf.api.ShareData;
-import uhf.api.UHF;
 
 public class ScannerActivity extends BaseActivity implements MultiLableCallBack {
 
@@ -31,6 +33,8 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
     @BindView(R.id.progress_wheel)
     SmoothProgressBar progressWheel;
     private static Boolean isStart = false;
+    @BindView(R.id.listView)
+    ListView listView;
     private ArrayList<DictBrandEntity> receptionArrayList = new ArrayList<>();
 
     private ScannerAdapter mAdapter;
@@ -46,6 +50,7 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
         settingToolbar(R.id.toolbar, R.id.toolbar_title, true);
         scannerBtn.setTag(Constants.FLAG_NONE_SCANNER);
         mAdapter = new ScannerAdapter(this, receptionArrayList);
+        listView.setAdapter(mAdapter);
     }
 
     @OnClick(R.id.scanner_btn)
@@ -56,7 +61,7 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
             progressWheel.setVisibility(View.VISIBLE);
             openTransfer();
         } else { //结束到开始
-            scannerBtn.setTag(Constants.FLAG_SCANNER);
+            scannerBtn.setTag(Constants.FLAG_NONE_SCANNER);
             scannerBtn.setText(R.string.start_scanner);
             progressWheel.setVisibility(View.GONE);
             closeTransfer();
@@ -114,29 +119,14 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
                 boolean isContains = false;
                 for (int i = 0; i < receptionArrayList.size(); i++) {
                     if (str_tmp.equals(receptionArrayList.get(i).getSerialNumber())) {
-//                        String t = receptionArrayList.get(i).get(lvAdptrlabTimes);
                         isContains = true;
                         return;
 
-//                        if (TextUtils.isEmpty(t))
-//                        {
-//                            t = "1";
-//							/*if(ishead)
-//							{
-//								t = "0";
-//							}*/
-//                        }
-//
-//                        t = String.valueOf(Integer.valueOf(t) + 1);
-//                        receptionArrayList.get(i).put(lvAdptrlabTimes, t);
-//                        receptionArrayList.get(i).put(lvAdptrlabRssi, rssi);
-//                        recptionSimpleAdapter.notifyDataSetChanged();
-//                        return;
                     }
                 }
                 if (!isContains) {
                     List<DictBrandEntity> list = MasApplication.getDaoSession().getDictBrandEntityDao()
-                            .queryRaw(" where SerialNumber = ?", new String[]{str_tmp});
+                            .queryRaw(" where SERIAL_NUMBER = ?", new String[]{str_tmp});
                     if (list == null || list.isEmpty()) {
                         return;
                     }
@@ -174,4 +164,5 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
             }
         }
     }
+
 }
