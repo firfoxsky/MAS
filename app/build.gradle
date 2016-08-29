@@ -45,4 +45,5 @@ dependencies {
     compile files('libs/UHFAPI.jar')
     compile 'com.jakewharton:butterknife:8.0.0'
     apt 'com.jakewharton:butterknife-compiler:8.0.0'
+    compile 'org.greenrobot:greendao:2.2.0'
 }

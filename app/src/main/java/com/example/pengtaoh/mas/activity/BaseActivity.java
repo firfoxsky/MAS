@@ -1,8 +1,8 @@
 package com.example.pengtaoh.mas.activity;
 
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +14,6 @@ import com.example.pengtaoh.mas.R;
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
-
 
 
     protected Toolbar mToolbar;

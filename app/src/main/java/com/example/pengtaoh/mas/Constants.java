@@ -9,5 +9,7 @@ public class Constants {
     public static final String FLAG_SCANNER = "SCANNER";
     public static final String FLAG_NONE_SCANNER = "NONE_SCANNER";
 
+    public static final String DATABASE_NAME = "mas_db";
+
 
 }

@@ -7,6 +7,7 @@ import android.widget.Button;
 import com.example.pengtaoh.mas.Constants;
 import com.example.pengtaoh.mas.MasApplication;
 import com.example.pengtaoh.mas.R;
+import com.example.pengtaoh.mas.adapter.ScannerAdapter;
 import com.example.pengtaoh.mas.uicomp.SmoothProgressBar.SmoothProgressBar;
 import com.example.pengtaoh.mas.utils.CommandUtil;
 import com.example.pengtaoh.mas.utils.UHFClient;
@@ -30,9 +31,10 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
     @BindView(R.id.progress_wheel)
     SmoothProgressBar progressWheel;
     private static Boolean isStart = false;
-    private UHF mUHF;
     private ArrayList<DictBrandEntity> receptionArrayList = new ArrayList<>();
-    private final String lvAdptrlabData = "Data";
+
+    private ScannerAdapter mAdapter;
+
 
     @Override
     int getContentViewId() {
@@ -43,6 +45,7 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
     void initViews() {
         settingToolbar(R.id.toolbar, R.id.toolbar_title, true);
         scannerBtn.setTag(Constants.FLAG_NONE_SCANNER);
+        mAdapter = new ScannerAdapter(this, receptionArrayList);
     }
 
     @OnClick(R.id.scanner_btn)
@@ -138,22 +141,11 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
                         return;
                     }
 
+                    receptionArrayList.addAll(list);
+                    mAdapter.notifyDataSetChanged();
+
                 }
 
-                String countMessage = "标签个数：" + String.valueOf(receptionArrayList.size());
-//                countTXT.setText(countMessage);
-                DictBrandEntity entity = new DictBrandEntity();
-                entity.put(lvAdptrlabData, str_tmp);
-//                hashMap.put(lvAdptrlabRssi, rssi);
-//                if(receptionArrayList.size()==0)
-//                {
-//                    hashMap.put(lvAdptrlabTimes, "Count");
-//                }
-//                else
-//                {
-//                    hashMap.put(lvAdptrlabTimes, "1");
-//                }
-                receptionArrayList.add(hashMap);
             }
         });
     }
@@ -177,10 +169,8 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
         if (info != null) {
             Boolean ret = UHFClient.mUHF.command(CommandType.STOP_MULTI_QUERY_TAGS_EPC, null);
             if (ret) {
-                setTitle("Stop Ok");
                 isStart = false;
             } else {
-                setTitle("Stop Fail");
             }
         }
     }

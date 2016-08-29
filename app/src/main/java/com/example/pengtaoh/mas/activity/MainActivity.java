@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.pengtaoh.mas.EditActivity;
 import com.example.pengtaoh.mas.R;
 
 import butterknife.BindView;

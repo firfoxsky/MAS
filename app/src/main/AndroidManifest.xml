@@ -2,29 +2,54 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pengtaoh.mas">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-sdk
+        android:minSdkVersion="12"
+        android:targetSdkVersion="20" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".activity.ScannerActivity"
+            android:label="@string/scanner_text"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".activity.EditActivity"
+            android:label="@string/edit_text"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".ScannerActivity"
-            android:label="@string/scanner_text" />
-        <activity
-            android:name=".EditActivity"
-            android:label="@string/edit_text" />
-        <activity android:name=".BaseActivity" />
-        <activity
-            android:name=".SettingActivity"
-            android:label="@string/setting_text"></activity>
+            android:name=".activity.SettingActivity"
+            android:label="@string/setting_text"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
