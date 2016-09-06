@@ -51,6 +51,10 @@
             android:name=".activity.SettingActivity"
             android:label="@string/setting_text"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.DetailActivity"
+            android:label="@string/detail_text"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

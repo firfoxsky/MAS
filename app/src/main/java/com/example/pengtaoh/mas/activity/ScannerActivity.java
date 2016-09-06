@@ -1,8 +1,10 @@
 package com.example.pengtaoh.mas.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -16,6 +18,7 @@ import com.example.pengtaoh.mas.utils.UHFClient;
 import com.pengtaoh.mas.dao.DictBrandEntity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,7 +39,7 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
     @BindView(R.id.listView)
     ListView listView;
     private ArrayList<DictBrandEntity> receptionArrayList = new ArrayList<>();
-
+    private HashMap<Integer, Integer> count = new HashMap<>();
     private ScannerAdapter mAdapter;
 
 
@@ -51,6 +54,16 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
         scannerBtn.setTag(Constants.FLAG_NONE_SCANNER);
         mAdapter = new ScannerAdapter(this, receptionArrayList);
         listView.setAdapter(mAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(ScannerActivity.this,DetailActivity.class);
+                intent.putExtra("item",receptionArrayList.get(i));
+                intent.putExtra("count",count.get(i));
+                startActivity(intent);
+            }
+        });
     }
 
     @OnClick(R.id.scanner_btn)
@@ -120,6 +133,11 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
                 for (int i = 0; i < receptionArrayList.size(); i++) {
                     if (str_tmp.equals(receptionArrayList.get(i).getSerialNumber())) {
                         isContains = true;
+                        if (count.containsKey(i)) {
+                            int num = count.get(i);
+                            count.put(i, num++);
+                        } else
+                            count.put(i, 1);
                         return;
 
                     }
@@ -132,6 +150,7 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
                     }
 
                     receptionArrayList.addAll(list);
+                    mAdapter.setNum(count);
                     mAdapter.notifyDataSetChanged();
 
                 }

@@ -1,12 +1,14 @@
 package com.example.pengtaoh.mas.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pengtaoh.mas.Constants;
 import com.example.pengtaoh.mas.MasApplication;
@@ -95,15 +97,35 @@ public class EditActivity extends BaseActivity {
     }
 
     public void insertDB() {
+        if (cardNumber.getText() == null || TextUtils.isEmpty(cardNumber.getText().toString())) {
+            Toast.makeText(this, "no has serial number !!!", Toast.LENGTH_SHORT);
+            return;
+        }
+        if (name.getText() == null || TextUtils.isEmpty(name.getText().toString())) {
+            Toast.makeText(this, "no has product name !!!", Toast.LENGTH_SHORT);
+            return;
+        }
         if (currentEntity != null) {
             MasApplication.getDaoSession().getDictBrandEntityDao().delete(currentEntity);
         }
         DictBrandEntity entity = new DictBrandEntity();
         entity.setModelCreateTime(System.currentTimeMillis());
-        entity.setArea(area.getText().toString());
-        entity.setAttr(attr.getText().toString());
-        entity.setDesc(desc.getText().toString());
-        entity.setType(category.getText().toString());
+        if (area.getText() == null || TextUtils.isEmpty(area.getText().toString())) {
+            entity.setArea("");
+        } else
+            entity.setArea(area.getText().toString());
+        if (attr.getText() == null || TextUtils.isEmpty(attr.getText().toString())) {
+            entity.setAttr("");
+        } else
+            entity.setAttr(attr.getText().toString());
+        if (desc.getText() == null || TextUtils.isEmpty(desc.getText().toString())) {
+            entity.setDesc("");
+        } else
+            entity.setDesc(desc.getText().toString());
+        if (category.getText() == null || TextUtils.isEmpty(category.getText().toString())) {
+            entity.setType("");
+        } else
+            entity.setType(category.getText().toString());
         entity.setName(name.getText().toString());
         entity.setSerialNumber(cardNumber.getText().toString());
         MasApplication.getDaoSession().getDictBrandEntityDao().insert(entity);

@@ -11,6 +11,7 @@ import com.pengtaoh.mas.dao.DictBrandEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,9 +23,15 @@ public class ScannerAdapter extends BaseAdapter {
 
     private List<DictBrandEntity> entityList;
 
+    private HashMap<Integer, Integer> count = new HashMap<>();
+
     public ScannerAdapter(Context mContext, List<DictBrandEntity> entityList) {
         this.mContext = mContext;
         this.entityList = entityList;
+    }
+
+    public void setNum(HashMap<Integer, Integer> count) {
+        this.count = count;
     }
 
     @Override
@@ -57,6 +64,10 @@ public class ScannerAdapter extends BaseAdapter {
         hold.name.setText(entity.getName());
         hold.number.setText(entity.getSerialNumber());
         hold.time.setText(longToString(entity.getModelCreateTime()));
+        if (count.containsKey(position))
+            hold.count.setText(""+count.get(position));
+        else
+            hold.count.setText("1");
 
         return convertView;
     }
@@ -74,12 +85,15 @@ public class ScannerAdapter extends BaseAdapter {
         private TextView name;
         private TextView number;
         private TextView time;
+        private TextView count;
 
 
         public BrandHolder(View view) {
             name = (TextView) view.findViewById(R.id.name);
             number = (TextView) view.findViewById(R.id.serial_number);
             time = (TextView) view.findViewById(R.id.time);
+            count = (TextView) view.findViewById(R.id.num);
+
         }
     }
 }
