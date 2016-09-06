@@ -58,10 +58,15 @@ public class ScannerActivity extends BaseActivity implements MultiLableCallBack 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(ScannerActivity.this,DetailActivity.class);
-                intent.putExtra("item",receptionArrayList.get(i));
-                intent.putExtra("count",count.get(i));
+                Intent intent = new Intent(ScannerActivity.this, DetailActivity.class);
+                intent.putExtra("item", receptionArrayList.get(i));
+                intent.putExtra("count", count.get(i));
                 startActivity(intent);
+
+                scannerBtn.setTag(Constants.FLAG_NONE_SCANNER);
+                scannerBtn.setText(R.string.start_scanner);
+                progressWheel.setVisibility(View.GONE);
+                closeTransfer();
             }
         });
     }
